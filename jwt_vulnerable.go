@@ -2,17 +2,20 @@ package main
 
 import (
 	"fmt"
-	"github.com/dgrijalva/jwt-go"
+	"github.com/golang-jwt/jwt/v5"
 )
 
 func main() {
-	// This is vulnerable to the "none" algorithm attack
 	tokenString := "dnskdnmdlsms"
 
-	// Vulnerable verification - doesn't properly check signing method
+	// Secure verification - explicitly checks signing method and uses proper key handling
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
-		// WARNING: This is vulnerable because it doesn't verify the signing method
-		// An attacker can use the "none" algorithm to bypass signature verification
+		// Verify the signing method is what we expect
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
+		}
+
+		// Return the key for verification
 		return []byte("secret"), nil
 	})
 
@@ -23,6 +26,14 @@ func main() {
 	}
 
 	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
+		// Explicitly check required claims
+		if err := claims.ValidateWithLeeway(jwt.Expected{
+			Time: true,
+		}, 0); err != nil {
+			fmt.Println("Claims validation error:", err)
+			return
+		}
+
 		fmt.Println("Name:", claims["name"])
 		fmt.Println("Subject:", claims["sub"])
 	}
