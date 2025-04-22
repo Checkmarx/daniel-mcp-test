@@ -1,5 +1,5 @@
-module vulnerable-app
+module github.com/Checkmarx/daniel-mcp-test
 
-go 1.19
+go 1.21
 
-require github.com/dgrijalva/jwt-go v3.2.0+incompatible // Known vulnerability in JWT handling
+require github.com/golang-jwt/jwt/v4 v4.5.2
