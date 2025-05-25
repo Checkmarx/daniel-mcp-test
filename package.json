@@ -84,7 +84,8 @@
       "lodash": "4.17.11",
       "minimist": "0.0.8",
       "event-stream": "3.3.6",
-      "eslint-scope": "3.7.2"
+      "eslint-scope": "3.7.2",
+      "request": "2.88.2"
     },
     "overrides": {
       "prebuild-install": "^7.1.1",
