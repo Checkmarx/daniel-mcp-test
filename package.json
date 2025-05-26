@@ -81,11 +81,11 @@
       "serialize-javascript": "^6.0.2",
       "tree-kill": "^1.2.2",
       "validator": "^13.12.0",
-      "lodash": "4.17.11",
-      "minimist": "0.0.8",
-      "event-stream": "3.3.6",
-      "eslint-scope": "3.7.2",
-      "request": "2.88.2"
+      "lodash": "4.17.11", //vulnerable version
+      "minimist": "0.0.8", //vulnerable version
+      "event-stream": "3.3.6", //malicious package
+      "eslint-scope": "3.7.2", //malicious package
+      "request": "2.88.2" //bad package - should replace
     },
     "overrides": {
       "prebuild-install": "^7.1.1",
